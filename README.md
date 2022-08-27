@@ -35,9 +35,9 @@ Create `test.json` file. You can use any filename.
 
 Run test by running following command:
 
-````
-starless-loadtester test.json --out=json```
-````
+```
+starless-loadtester test.json --out=json
+```
 
 This will generate two files:
 
