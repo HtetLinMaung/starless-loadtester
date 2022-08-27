@@ -4,11 +4,15 @@ Command line load tester.
 
 ## Installation
 
+Install globally as root:
+
 ```
-npm install starless-loadtester
+npm install -g starless-loadtester
 ```
 
-## Sample json
+## Basic Usage
+
+Create `test.json` file. You can use any filename.
 
 ```json
 {
@@ -28,3 +32,16 @@ npm install starless-loadtester
   }
 }
 ```
+
+Run test by running following command:
+
+````
+starless-loadtester test.json --out=json```
+````
+
+This will generate two files:
+
+- test_summary.json
+- signin_results.json
+
+> Note: All durations are calculated in seconds
