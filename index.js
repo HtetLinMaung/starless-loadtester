@@ -23,7 +23,7 @@ async function main() {
 
       const promises = [];
       for (let i = 0; i < v.t; i++) {
-        if (promises.length == n) {
+        if (promises.length % n == 0) {
           await timeout(1);
         }
         if (Array.isArray(body)) {
