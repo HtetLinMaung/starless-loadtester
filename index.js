@@ -2,6 +2,7 @@
 
 const fs = require("fs");
 const path = require("path");
+const { timeout } = require("starless-async");
 const request = require("./request");
 const writeToCsv = require("./write-to-csv");
 const rootPath = process.cwd();
@@ -17,15 +18,20 @@ async function main() {
       const url = `${json.domain}${v.path}`;
       const headers = v.headers || {};
       const body = v.body || {};
+      const query = v.query || {};
+      const n = v.n || v.t;
 
       const promises = [];
       for (let i = 0; i < v.t; i++) {
+        if (promises.length == n) {
+          await timeout(1);
+        }
         if (Array.isArray(body)) {
           for (const b of body) {
-            promises.push(request(url, v.method, b, headers));
+            promises.push(request(url, v.method, query, b, headers));
           }
         } else {
-          promises.push(request(url, v.method, body, headers));
+          promises.push(request(url, v.method, query, body, headers));
         }
       }
 
