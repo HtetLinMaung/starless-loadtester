@@ -17,16 +17,10 @@ async function main() {
     const items = [];
     for (const [endpointName, v] of Object.entries(json.endpoints)) {
       const url = `${json.domain}${v.path}`;
-      const headers = injectFake(v.headers || {});
+      const headers = v.headers || {};
       let body = v.body || {};
-      const query = injectFake(v.query || {});
+      const query = v.query || {};
       const n = v.n || v.t;
-
-      if (!body.isArray(body)) {
-        body = injectFake(body);
-      } else {
-        body = body.map((b) => injectFake(b));
-      }
 
       const promises = [];
       for (let i = 0; i < v.t; i++) {
@@ -35,10 +29,26 @@ async function main() {
         }
         if (Array.isArray(body)) {
           for (const b of body) {
-            promises.push(request(url, v.method, query, b, headers));
+            promises.push(
+              request(
+                url,
+                v.method,
+                injectFake(query),
+                injectFake(b),
+                injectFake(headers)
+              )
+            );
           }
         } else {
-          promises.push(request(url, v.method, query, body, headers));
+          promises.push(
+            request(
+              url,
+              v.method,
+              injectFake(query),
+              injectFake(body),
+              injectFake(headers)
+            )
+          );
         }
       }
 
