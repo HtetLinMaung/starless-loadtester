@@ -1,11 +1,12 @@
 {
   "name": "starless-loadtester",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "",
   "main": "index.js",
   "scripts": {
     "start": "./index.js test.json --out=json",
-    "lint-init": "eslint --init"
+    "lint-init": "eslint --init",
+    "release": "npm publish"
   },
   "bin": "./index.js",
   "keywords": [],
