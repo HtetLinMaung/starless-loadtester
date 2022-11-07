@@ -15,6 +15,9 @@ async function main() {
     const json = require(path.join(rootPath, args[0]));
 
     const items = [];
+    const globalHeaders = json.headers || {};
+    const globalBody = json.body || {};
+    const globalQuery = json.query || {};
     for (const [endpointName, v] of Object.entries(json.endpoints)) {
       const promises = [];
 
@@ -38,9 +41,9 @@ async function main() {
               };
               for (const step of v.steps) {
                 const url = `${json.domain}${step.path}`;
-                const headers = step.headers || {};
-                const body = step.body || {};
-                const query = step.query || {};
+                const headers = { ...globalHeaders, ...(step.headers || {}) };
+                const body = { ...globalBody, ...(step.body || {}) };
+                const query = { ...globalQuery, ...(step.query || {}) };
 
                 const result = await request(
                   url,
@@ -64,9 +67,9 @@ async function main() {
         }
       } else {
         const url = `${json.domain}${v.path}`;
-        const headers = v.headers || {};
-        let body = v.body || {};
-        const query = v.query || {};
+        const headers = { ...globalHeaders, ...(v.headers || {}) };
+        const body = { ...globalBody, ...(v.body || {}) };
+        const query = { ...globalQuery, ...(v.query || {}) };
 
         for (let i = 0; i < v.t; i++) {
           if (promises.length % n == 0) {
