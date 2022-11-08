@@ -42,10 +42,26 @@ async function main() {
               };
               for (const step of v.steps) {
                 const url = `${json.domain}${step.path}`;
-                const headers = { ...globalHeaders, ...(step.headers || {}) };
-                const body = { ...globalBody, ...(step.body || {}) };
-                const query = { ...globalQuery, ...(step.query || {}) };
-                const options = { ...globalOptions, ...(step.options || {}) };
+                const headers = {
+                  ...globalHeaders,
+                  ...(v.headers || {}),
+                  ...(step.headers || {}),
+                };
+                const body = {
+                  ...globalBody,
+                  ...(v.body || {}),
+                  ...(step.body || {}),
+                };
+                const query = {
+                  ...globalQuery,
+                  ...(v.query || {}),
+                  ...(step.query || {}),
+                };
+                const options = {
+                  ...globalOptions,
+                  ...(v.options || {}),
+                  ...(step.options || {}),
+                };
 
                 const result = await request(
                   url,

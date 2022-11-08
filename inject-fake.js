@@ -2,9 +2,10 @@ const { faker } = require("@faker-js/faker");
 const evaluate = require("./evaluate");
 
 const injectFake = (obj = {}, env = {}) => {
+  env["faker"] = faker;
   let newObj = {};
   for (const [k, v] of Object.entries(obj)) {
-    newObj[k] = evaluate(v, { ...env, faker });
+    newObj[k] = evaluate(v, env);
   }
   return newObj;
 };
