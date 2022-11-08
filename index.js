@@ -18,6 +18,7 @@ async function main() {
     const globalHeaders = json.headers || {};
     const globalBody = json.body || {};
     const globalQuery = json.query || {};
+    const globalOptions = json.options || {};
     for (const [endpointName, v] of Object.entries(json.endpoints)) {
       const promises = [];
 
@@ -44,13 +45,15 @@ async function main() {
                 const headers = { ...globalHeaders, ...(step.headers || {}) };
                 const body = { ...globalBody, ...(step.body || {}) };
                 const query = { ...globalQuery, ...(step.query || {}) };
+                const options = { ...globalOptions, ...(step.options || {}) };
 
                 const result = await request(
                   url,
                   step.method,
                   injectFake(query, { state }),
                   injectFake(body, { state }),
-                  injectFake(headers, { state })
+                  injectFake(headers, { state }),
+                  injectFake(options, { state })
                 );
                 state[`$${count++}`] = result.response;
                 finalResult = {
@@ -70,6 +73,7 @@ async function main() {
         const headers = { ...globalHeaders, ...(v.headers || {}) };
         const body = { ...globalBody, ...(v.body || {}) };
         const query = { ...globalQuery, ...(v.query || {}) };
+        const options = { ...globalOptions, ...(v.options || {}) };
 
         for (let i = 0; i < v.t; i++) {
           if (promises.length % n == 0) {
@@ -83,7 +87,8 @@ async function main() {
                   v.method,
                   injectFake(query),
                   injectFake(b),
-                  injectFake(headers)
+                  injectFake(headers),
+                  injectFake(options)
                 )
               );
             }
@@ -94,7 +99,8 @@ async function main() {
                 v.method,
                 injectFake(query),
                 injectFake(body),
-                injectFake(headers)
+                injectFake(headers),
+                injectFake(options)
               )
             );
           }
