@@ -27,7 +27,8 @@ Create `test.json` file. You can use any filename.
         "password": "User@123"
       },
       "headers": {},
-      "t": 1000
+      "t": 1000,
+      "n": 1000
     }
   }
 }
