@@ -28,6 +28,12 @@ module.exports = async (
     res = err.response;
     success = false;
   }
+  console.log(body);
+  console.log(headers.Authorization);
+  if ("data" in res) {
+    console.log(res.data);
+  }
+
   const duration = moment.duration(moment().diff(start)).asSeconds();
   return {
     success,
