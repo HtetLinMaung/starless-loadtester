@@ -30,7 +30,7 @@ module.exports = async (
   }
   console.log(body);
   console.log(headers.Authorization);
-  if ("data" in res) {
+  if (res && "data" in res) {
     console.log(res.data);
   }
 
