@@ -12,12 +12,13 @@ async function main() {
   if (args[0]) {
     const json = require(path.join(rootPath, args[0]));
 
+    let totalcounts = 0;
     let finishedCounts = 0;
     const items = await testLoad(
       json,
       () => {
         finishedCounts++;
-        console.log(`Requests: 0/${finishedCounts}`);
+        console.log(`Requests: ${totalcounts}/${finishedCounts}`);
       },
       (results, item, endpointName) => {
         if (args.includes("--out=json")) {
@@ -31,6 +32,7 @@ async function main() {
       },
       (total) => {
         console.log(`Requests: ${total}/${finishedCounts}`);
+        totalcounts = total;
       }
     );
     if (args.includes("--out=json")) {
