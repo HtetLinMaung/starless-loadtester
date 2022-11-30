@@ -2,7 +2,12 @@ const { timeout } = require("starless-async");
 const injectFake = require("./inject-fake");
 const request = require("./request");
 
-module.exports = async (json = {}, resCb = () => {}, cb = () => {}) => {
+module.exports = async (
+  json = {},
+  resCb = () => {},
+  cb = () => {},
+  promiseCb = () => {}
+) => {
   const items = [];
   const globalHeaders = json.headers || {};
   const globalBody = json.body || {};
@@ -87,6 +92,7 @@ module.exports = async (json = {}, resCb = () => {}, cb = () => {}) => {
             return finalResult;
           })()
         );
+        promiseCb(promises.length);
       }
     } else {
       const url = `${json.domain}${v.path}`;
@@ -123,6 +129,7 @@ module.exports = async (json = {}, resCb = () => {}, cb = () => {}) => {
               injectFake(options)
             )
           );
+          promiseCb(promises.length);
         }
       }
     }

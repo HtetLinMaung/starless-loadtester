@@ -12,9 +12,13 @@ async function main() {
   if (args[0]) {
     const json = require(path.join(rootPath, args[0]));
 
+    let finishedCounts = 0;
     const items = await testLoad(
       json,
-      () => {},
+      () => {
+        finishedCounts++;
+        console.log(`Requests: 0/${finishedCounts}`);
+      },
       (results, item, endpointName) => {
         if (args.includes("--out=json")) {
           fs.writeFileSync(
@@ -24,6 +28,9 @@ async function main() {
         } else {
           writeToCsv(results, `${endpointName}_results`);
         }
+      },
+      (total) => {
+        console.log(`Requests: ${total}/${finishedCounts}`);
       }
     );
     if (args.includes("--out=json")) {
