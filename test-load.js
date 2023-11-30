@@ -119,6 +119,7 @@ module.exports = async (
                 injectFake(options)
               )
             );
+            promiseCb(promises.length);
           }
         } else {
           promises.push(
