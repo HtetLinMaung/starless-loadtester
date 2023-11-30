@@ -97,7 +97,9 @@ module.exports = async (
     } else {
       const url = `${json.domain}${v.path}`;
       const headers = { ...globalHeaders, ...(v.headers || {}) };
-      const body = { ...globalBody, ...(v.body || {}) };
+      const body = Array.isArray(v.body)
+        ? v.body
+        : { ...globalBody, ...(v.body || {}) };
       const query = { ...globalQuery, ...(v.query || {}) };
       const options = { ...globalOptions, ...(v.options || {}) };
 
