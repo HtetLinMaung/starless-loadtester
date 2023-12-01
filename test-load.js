@@ -156,8 +156,8 @@ module.exports = async (
       avg: durations.reduce((a, b) => a + b, 0) / durations.length,
       successCounts,
       failCounts,
-      successPercent: (successCounts / v.t) * 100,
-      failPercent: (failCounts / v.t) * 100,
+      successPercent: (successCounts / promises.length) * 100,
+      failPercent: (failCounts / promises.length) * 100,
     };
     // console.log(item);
     items.push(item);
